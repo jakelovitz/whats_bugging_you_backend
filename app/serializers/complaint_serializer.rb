@@ -1,3 +1,3 @@
 class ComplaintSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :complaint_type_id, :severity, :complaint_text
 end

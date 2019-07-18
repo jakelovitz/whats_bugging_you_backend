@@ -1,3 +1,3 @@
 class ComplaintTypeSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :user_id, :name, :color
 end

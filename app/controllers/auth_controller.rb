@@ -13,12 +13,24 @@ class AuthController < ApplicationController
         end
     end
 
-    # def auto_login
-    #     if session_user
-    #         render json: session_user
-    #     else
-    #         render json: {errors: "cookies y'all"}
-    #     end
-    # end
+    def auto_login
+        # byebug
+
+        id = request.headers["Authorization"]
+
+        user = User.find_by(id: id)
+
+        if user
+            render json: user
+        else
+            render json: {errors: "handz off my cookiez"}
+        end
+
+        # if session_user
+        #     render json: session_user
+        # else
+        #     render json: {errors: "cookies y'all"}
+        # end
+    end
 
 end
