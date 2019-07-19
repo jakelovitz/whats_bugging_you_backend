@@ -5,32 +5,23 @@ class AuthController < ApplicationController
 
         if user && user.authenticate(params[:password])
 
-            # token = encode_token(user.id)
+            token = JWT.encode({user_id: user.id}, "supes_secret")
 
-            render json: user
+            render json: {user: UserSerializer.new(user), token: token}
         else
             render json: {errors: "you messed up goofball for shame"}
         end
     end
 
     def auto_login
-        # byebug
 
-        id = request.headers["Authorization"]
-
-        user = User.find_by(id: id)
-
-        if user
-            render json: user
+        if session_user
+            render json: session_user
+            # if there's that bug again try stucturing this return like you did above
         else
             render json: {errors: "handz off my cookiez"}
         end
 
-        # if session_user
-        #     render json: session_user
-        # else
-        #     render json: {errors: "cookies y'all"}
-        # end
     end
 
 end

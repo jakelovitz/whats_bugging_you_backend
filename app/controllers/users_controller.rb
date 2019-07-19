@@ -21,7 +21,10 @@ class UsersController < ApplicationController
         )
         user.save
 
-        render json: user
+        token = JWT.encode_token({user_id: user.id}, "supes_secret")
+
+
+        render json: {user: UserSerializer.new(user), token: token}
     end
 
     private
