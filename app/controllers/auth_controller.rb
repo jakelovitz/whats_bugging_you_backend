@@ -7,7 +7,7 @@ class AuthController < ApplicationController
 
             # token = encode_token(user.id)
 
-            render json: {user: UserSerializer.new(user)}
+            render json: user
         else
             render json: {errors: "you messed up goofball for shame"}
         end
