@@ -20,6 +20,14 @@ class ComplaintsController < ApplicationController
         render json: complaint
     end
 
+    def user_complaints
+        @user_complaints = Complaint.all.each { |complaint|
+            complaint.complaint_type.user.id === params["user_id"]
+        }
+
+        render json: @user_complaints
+    end
+
 end
 
 private
