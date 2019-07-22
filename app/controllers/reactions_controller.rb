@@ -8,14 +8,14 @@ class ReactionsController < ApplicationController
 
     def create
         # byebug
-        reaction = Reaction.new(
+        reaction = Reaction.create(
             complaint_id: params["complaintId"],
             user_id: params["userId"],
             updated_severity: params["reactionSeverity"],
             cooldown_thoughts: params["reactionText"]
             # complaint_params
         )
-        reaction.save
+        # reaction.save
 
         render json: reaction
     end
