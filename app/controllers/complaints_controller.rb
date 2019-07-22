@@ -28,6 +28,21 @@ class ComplaintsController < ApplicationController
         render json: @user_complaints
     end
 
+    def destroy
+        # byebug
+        @complaint = Complaint.find(params["id"])
+
+        @reactions = @complaint.reactions
+
+        @reactions.each do |reaction|
+            reaction.destroy
+        end
+
+        @complaint.destroy
+
+        render json: Complaint.all
+    end
+
 end
 
 private
