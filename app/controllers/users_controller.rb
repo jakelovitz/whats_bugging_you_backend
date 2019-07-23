@@ -28,8 +28,22 @@ class UsersController < ApplicationController
             render json: {errors: "Sorry buddy, someone snatched that username. Try another one!"}
         end
 
+    end
 
+    def edit
+        @user = User.find(params["id"])
+    end
 
+    def update
+        @user = User.find(params["id"])
+        @user.assign_attributes(username: params["newUsername"], phone_number: params["newPhoneNumber"])
+
+        if @user.valid?
+            @user.update(username: params["newUsername"], phone_number: params["newPhoneNumber"])
+            render json: @user
+        else
+            render json: {errors: "Sorry buddy, someone snatched that username. Try another one!"}
+        end
     end
 
     private

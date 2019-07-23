@@ -18,6 +18,18 @@ class ComplaintTypesController < ApplicationController
         render json: complaint_type
     end
 
+    def edit
+        @complaint_type = ComplaintType.find(params["id"])
+    end
+
+    def update
+        # byebug
+        @complaint_type = ComplaintType.find(params["id"])
+        @complaint_type.update(user_id: params["userId"], name: params["complaintTypeName"], color: params["complaintTypeColor"])
+
+        render json: @complaint_type
+    end
+
     private
 
     # def complaint_type_params
