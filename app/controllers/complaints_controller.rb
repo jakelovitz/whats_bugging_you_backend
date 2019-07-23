@@ -21,11 +21,43 @@ class ComplaintsController < ApplicationController
     end
 
     def user_complaints
-        @user_complaints = Complaint.all.each { |complaint|
-            complaint.complaint_type.user.id === params["user_id"]
+        @user_complaints = []
+        
+        # byebug
+        Complaint.all.each { |complaint|
+            if complaint.complaint_type.user.id === params["user_id"]
+                @user_complaints.push(complaint)
+            end
         }
 
         render json: @user_complaints
+    end
+
+    def destroy
+        # byebug
+        @complaint = Complaint.find(params["id"])
+
+        @reactions = @complaint.reactions
+
+        @reactions.each do |reaction|
+            reaction.destroy
+        end
+
+        @complaint.destroy
+
+        render json: Complaint.all
+    end
+
+    def edit
+        @complaint = Complaint.find(params["id"])
+    end
+
+    def update
+        # byebug
+        @complaint = Complaint.find(params["id"])
+        @complaint.update(complaint_type_id: params["newComplaintType"], severity: params["newComplaintSeverity"], complaint_text: params["newComplaintText"])
+
+        render json: @complaint
     end
 
 end
