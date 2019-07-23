@@ -14,17 +14,22 @@ class UsersController < ApplicationController
     def create
         # person_params
         # byebug
-        user = User.new(
+        @user = User.new(
             username: params["username"],
             password: params["password"],
             phone_number: params["phone_number"]
         )
-        user.save
 
-        token = JWT.encode_token({user_id: user.id}, "supes_secret")
+        if @user.valid?
+            @user.save
+            token = JWT.encode_token({user_id: @user.id}, "supes_secret")
+            render json: {user: UserSerializer.new(user), token: token}
+        else
+            render json: {errors: "Sorry buddy, someone snatched that username. Try another one!"}
+        end
 
 
-        render json: {user: UserSerializer.new(user), token: token}
+
     end
 
     private
