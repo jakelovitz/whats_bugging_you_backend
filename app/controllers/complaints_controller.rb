@@ -48,6 +48,18 @@ class ComplaintsController < ApplicationController
         render json: Complaint.all
     end
 
+    def edit
+        @complaint = Complaint.find(params["id"])
+    end
+
+    def update
+        # byebug
+        @complaint = Complaint.find(params["id"])
+        @complaint.update(complaint_type_id: params["newComplaintType"], severity: params["newComplaintSeverity"], complaint_text: params["newComplaintText"])
+
+        render json: @complaint
+    end
+
 end
 
 private
