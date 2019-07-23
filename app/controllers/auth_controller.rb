@@ -16,6 +16,7 @@ class AuthController < ApplicationController
     def auto_login
 
         if session_user
+            # render json: {user: UserSerializer.new(user), token: token}
             render json: session_user
             # if there's that bug again try stucturing this return like you did above
         else
