@@ -23,11 +23,26 @@ class ComplaintTypesController < ApplicationController
     end
 
     def update
-        # byebug
+        byebug
         @complaint_type = ComplaintType.find(params["id"])
         @complaint_type.update(user_id: params["userId"], name: params["complaintTypeName"], color: params["complaintTypeColor"])
 
         render json: @complaint_type
+    end
+
+    def destroy
+        # byebug
+        @complaint_type = ComplaintType.find(params["id"])
+
+        @complaints = @complaint_type.complaints
+
+        @complaints.each do |complaint|
+            complaint.destroy
+        end
+
+        @complaint_type.destroy
+
+        render json: ComplaintType.all
     end
 
     private
